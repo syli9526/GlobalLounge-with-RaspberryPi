@@ -7,7 +7,7 @@
 - 출입문 상태 : RGB_LED 
 - 출입문 동작 : 서보모터
 - 출입 인증 : 카메라 모듈로 QR 코드 인식 (파이카메라)
-- 출입 개폐 : 초음파 센서로 사람과의 거리인식
+- 출입 개폐 : 초음파 센서로 사람과의 거리인식  —> <span style="color:red">변경 : 적외선 센서로 거리감지 </span>
 
 ---
 
@@ -130,11 +130,42 @@ while 1 :
     
 ~~~
 
+##### 3 -2 적외선 센서 제어하기
+
+:  초음파 센서로 거리를 감지하는 부분에서 __input__ 이 들어오지 않으면 __무한루프__ 를 도는 현상이 발생하여 적외선 센서를 이용해 일정거리 내의 물건을 감지하도록 변경함.
+
+~~~python
+import RPi.GPIO as gpio
+import time
+
+gpio.setwarnings(False)
+gpio.setmode(gpio.BCM)
+
+# init sonic sencor
+a_out = 23
+
+gpio.setup(a_out,gpio.IN)
+
+
+def infrared():
+  
+    try:
+        input_state = gpio.input(a_out)
+        if input_state == False:
+    				print("일정거리 내의 물건을 감지하였습니다.")
+		finally:
+      gpio.cleanup()
+
+
+~~~
+
+
+
 ##### 4. 동기화 작업
 
-:  __서버와 통신__을 하는 스레드와 __QRcode__ 를 인식하는 스레드간의 동기화 작업
+:   __서버와 통신__ 을 하는 스레드와 __QRcode__ 를 인식하는 스레드간의 동기화 작업
 
- (__threading.Lock__ 과 __threading.Event__사용)
+ (__threading.Lock__ 과 __threading.Event__ 사용)
 
 ~~~python
 import threading, time

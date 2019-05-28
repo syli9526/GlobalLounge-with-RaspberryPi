@@ -7,7 +7,8 @@
 - 출입문 상태 : RGB_LED 
 - 출입문 동작 : 서보모터
 - 출입 인증 : 카메라 모듈로 QR 코드 인식 (파이카메라)
-- 출입 개폐 : 초음파 센서로 사람과의 거리인식  —> <span style="color:red">변경 : 적외선 센서로 거리감지 </span>
+- 출입 개폐 : 초음파 센서로 사람과의 거리인식  —> 변경 : 적외선 센서로 거리감지 
+- (추가) QR코드 인식 알림 : 엑티브 부저
 
 ---
 
@@ -148,11 +149,10 @@ gpio.setup(a_out,gpio.IN)
 
 
 def infrared():
-  
     try:
-       input_state = gpio.input(a_out)
-       if input_state == False:
-       	print("일정거리 내의 물건을 감지하였습니다.")
+      input_state = gpio.input(a_out)
+      if input_state == False:
+        print("일정거리 내의 물건을 감지하였습니다.")
     finally:
       gpio.cleanup()
 
@@ -242,4 +242,28 @@ class Qr(threading.Thread):
                 print (e)
 
 ~~~
+
+
+
+##### 5. (추가) 엑티브 부저
+
+: 엑티브 부저로 QR코드 인식시 '삐' 소리로 QR코드가 인식 되었다는 것을 사용자에게 알림
+
+~~~python
+import RPi.GPIO as gpio
+import time
+
+gpio.setwarnings(False)
+gpio.setmode(gpio.BCM)
+
+buz = 27
+gpio.setup(buz, gpio.OUT, initial = gpio.HIGH)
+
+def buzzer():
+    gpio.output(buz,gpio.LOW) # 소리 시작
+    time.sleep(0.1)
+    gpio.output(buz,gpio.HIGH) # 소리 종료
+~~~
+
+
 

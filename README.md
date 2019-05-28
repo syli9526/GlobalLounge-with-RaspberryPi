@@ -150,10 +150,10 @@ gpio.setup(a_out,gpio.IN)
 def infrared():
   
     try:
-        input_state = gpio.input(a_out)
-        if input_state == False:
-    				print("일정거리 내의 물건을 감지하였습니다.")
-		finally:
+       input_state = gpio.input(a_out)
+       if input_state == False:
+       	print("일정거리 내의 물건을 감지하였습니다.")
+    finally:
       gpio.cleanup()
 
 

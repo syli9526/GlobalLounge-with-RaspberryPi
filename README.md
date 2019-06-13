@@ -87,7 +87,7 @@ while(display.isNotDone()):
 
 :  __gpio__(library)사용
 
-![image](https://user-images.githubusercontent.com/48287388/55797015-5d043900-5b06-11e9-8ab0-67a93332cfe1.png)
+![image](https://user-images.githubusercontent.com/48287388/55797015-5d043900-5b06-11e9-8ab0-67a93332cfe1.png){: width="300" height="300"){: .center}
 
 초음파 센서는 20kHz이상의 주파수를 가지는 음파를 발생시키고, 그 음파가 물체에 반사되어오는 시간을 통해 거리를 측정하는 센서
 
